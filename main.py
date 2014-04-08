@@ -1,17 +1,17 @@
-from bottle import view, route, run
-#  import bottle
-#  from bottle.ext import sqlite
-#  
-#  app = bottle.Bottle()
-#  plugin = sqlite.Plugin(dbfile='/tmp/test.db')
-#  app.install(plugin)
+from bottle import view, route, run, Bottle, install
+from bottle_sqlite import SQLitePlugin
 
-#  @app.route('/show/:item')
-#  def show(item, db):
-#      row = db.execute('SELECT * from items where name=?', item).fetchone()
-#      if row:
-#          return template('showitem', page=row)
-#      return HTTPError(404, "Page not found")
+plugin = SQLitePlugin(dbfile='baza.db', keyword='db')
+install(plugin)
+
+@route('/anketa/<uid:int>/', template='anketa')
+#  @view('anketa')
+def show_anketa(uid, db):
+    result = list(db.execute("SELECT text FROM vprasanja WHERE anketa=?",uid))
+#      result = list(db.execute("SELECT * FROM vprasanja"))
+    if result == []:
+        abort(404)
+    return {'vprasanja': list(result)}
 
 @route('/')
 @view('index')
