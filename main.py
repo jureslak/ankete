@@ -19,18 +19,24 @@ app = SessionMiddleware(bottle.app(), session_opts)
 @route('/anketa/<uid:int>/', template='anketa')
 #  @view('anketa')
 def show_anketa(uid, db):
-    result = list(db.execute("SELECT text FROM vprasanja WHERE anketa=?",uid))
-#      result = list(db.execute("SELECT * FROM vprasanja"))
+    result = list(db.execute("SELECT text FROM vprasanja WHERE anketa=?",str(uid)))
     if result == []:
         abort(404)
-    return {'vprasanja': list(result)}
+    return {'vprasanja': map(list, result)}
 
-@route('/count/')
+@route("/count/")
 def count():
     s = bottle.request.environ.get('beaker.session')
-    s['test'] = s.get('test',0) + 1
+    s['visits'] = s.get('visits', 0) + 1
     s.save()
-    return 'Test counter: %d' % s['test']
+    return "{} obiskov".format(s['visits'])
+
+#  @route('/count/')
+#  def count():
+#      s = bottle.request.environ.get('beaker.session')
+#      s['test'] = s.get('test',0) + 1
+#      s.save()
+#      return 'Test counter: %d' % s['test']
 
 @route('/')
 @view('index')
