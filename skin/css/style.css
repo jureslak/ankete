@@ -1,0 +1,19 @@
+h1 {
+    color: #ff8800;
+    text-decoration: underline;
+}
+
+p {
+    font-family: "Arial", "Comic Sans MS", sans-serif;
+}
+
+a {
+    color: #888;
+    text-decoration: underline;
+}
+
+a:hover {
+    color: #444;
+    font-size: 16pt;
+    text-decoration: underline; 
+}
