@@ -8,17 +8,16 @@ install(plugin)
 
 session_opts = {
     'session.type': 'file',
-    'session.cookie_expires': 300,
+    'session.cookie_expires': 3000,
     'session.data_dir': './session',
     'session.auto': True
 }
 
 app = SessionMiddleware(bottle.app(), session_opts)
-root = '/home/jureslak/bottle/'
 
 @route('/skin/css/style.css')
 def style():
-    return static_file('skin/css/style.css', root=root)
+    return static_file('style.css', root="skin/css/")
 
 @route("/login/")
 @view("login")
@@ -32,15 +31,23 @@ def login():
 def login(db):
     username = request.forms.get('username')
     password = request.forms.get('password')
-    result = db.execute('SELECT * FROM uporabniki WHERE username=? AND password=?',(username,password));
-    print (result)
-    if result is None:
+    result = db.execute('SELECT * FROM uporabniki WHERE username=? AND password=?',(username,password))
+    data = result.fetchall()
+    
+    if len(data) == 0:
         redirect('/login/')
     else:
         s = bottle.request.environ.get('beaker.session')
         s['login'] = True
+        s['username'] = username
         s.save()
         redirect('/')
+
+@route("/logout/")
+def logout():
+    request.environ["beaker.session"].delete()
+    redirect("/login/")
+    return
 
 @route('/anketa/<uid:int>/', template='anketa')
 #  @view('anketa')
@@ -66,6 +73,9 @@ def count():
 
 @route('/')
 @view('index')
-def index(): return
+def index():
+    if bottle.request.environ.get('beaker.session').get("login") == None:
+        redirect("/login/")
+    return
 
 run(app=app)
