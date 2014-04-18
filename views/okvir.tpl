@@ -12,6 +12,11 @@
         %end
       </div>
     </div>
+    <div class="menu_placeholder">
+      %if loggedin:
+        % include("menu.tpl")
+      %end
+    </div>
     <div class="content">
       {{!base}}
     </div>
