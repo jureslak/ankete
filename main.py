@@ -19,15 +19,17 @@ app = SessionMiddleware(bottle.app(), session_opts)
 def style():
     return static_file('style.css', root="skin/css/")
 
-@route("/login/")
+@route("/login")
 @view("login")
 def login():
     s = bottle.request.environ.get('beaker.session')
     if s.get('login', False):
         redirect('/')
-    return {}
+        return {"loggedin":True}
+    return {"loggedin":False}   
 
-@post("/do_login/")
+
+@post("/do_login")
 def login(db):
     username = request.forms.get('username')
     password = request.forms.get('password')
@@ -35,7 +37,7 @@ def login(db):
     data = result.fetchall()
     
     if len(data) == 0:
-        redirect('/login/')
+        redirect('/login')
     else:
         s = bottle.request.environ.get('beaker.session')
         s['login'] = True
@@ -43,13 +45,13 @@ def login(db):
         s.save()
         redirect('/')
 
-@route("/logout/")
+@route("/logout")
 def logout():
     request.environ["beaker.session"].delete()
-    redirect("/login/")
+    redirect("/login")
     return
 
-@route('/anketa/<uid:int>/', template='anketa')
+@route('/anketa/<uid:int>', template='anketa')
 #  @view('anketa')
 def show_anketa(uid, db):
     result = list(db.execute("SELECT text FROM vprasanja WHERE anketa=?",str(uid)))
@@ -57,7 +59,7 @@ def show_anketa(uid, db):
         abort(404)
     return {'vprasanja': map(list, result)}
 
-@route("/count/")
+@route("/count")
 def count():
     s = bottle.request.environ.get('beaker.session')
     s['visits'] = s.get('visits', 0) + 1
@@ -75,7 +77,7 @@ def count():
 @view('index')
 def index():
     if bottle.request.environ.get('beaker.session').get("login") == None:
-        redirect("/login/")
-    return
-
+        redirect("/login")
+        return {"loggedin":False}
+    return {"loggedin":True}
 run(app=app)
