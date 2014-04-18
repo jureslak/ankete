@@ -7,7 +7,9 @@
   <body>
     <div class="header">
       <div style="float:right;margin-top:70px;margin-right:20px;">
-        <a href="logout/">Odjava</a>
+        %if loggedin:
+          <a href="logout">Odjava</a>
+        %end
       </div>
     </div>
     <div class="content">
