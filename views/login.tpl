@@ -1,4 +1,4 @@
-%rebase("menu.tpl", loggedin = loggedin)
+%rebase("okvir.tpl", loggedin = loggedin)
 <form method='post' action='/do_login'>
   Username: <input type='text' name='username'><br>
   Password: <input type='password' name='password'><br>
