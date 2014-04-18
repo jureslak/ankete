@@ -51,6 +51,14 @@ def logout():
     redirect("/login")
     return
 
+@route('/moje_ankete')
+@view('moje_ankete')
+def moje_ankete():
+    if bottle.request.environ.get('beaker.session').get("login") == None:
+        redirect("/login")
+        return {"loggedin":False}
+    return {"loggedin":True}
+
 @route('/anketa/<uid:int>', template='anketa')
 #  @view('anketa')
 def show_anketa(uid, db):
