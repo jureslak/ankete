@@ -51,13 +51,40 @@ def logout():
     redirect("/login")
     return
 
-@route('/moje_ankete')
-@view('moje_ankete')
-def moje_ankete():
+#zaradi neznanih razlogov funkcija ne sprejme db parametra, ce uporabimo view,
+#vendar pa dela pa s templatom
+@route('/moje_ankete', template="moje_ankete")
+#@view('moje_ankete')
+def moje_ankete(db):
     if bottle.request.environ.get('beaker.session').get("login") == None:
         redirect("/login")
         return {"loggedin":False}
-    return {"loggedin":True}
+
+    s = bottle.request.environ.get('beaker.session')
+    
+    result = db.execute("""SELECT id, naslov, uvod FROM ankete
+    INNER JOIN uporabniki
+    ON ankete.uporabnik = uporabniki.username
+    WHERE ankete.uporabnik = ? """, (s['username'],) )
+
+    return {"loggedin":True, "data":result.fetchall()}
+
+@route("/moje_ankete/<uid:int>", template="anketa")
+def izbrana_anketa(uid, db):
+    if bottle.request.environ.get('beaker.session').get("login") == None:
+        redirect("/login")
+        return {"loggedin":False}
+    
+    s = bottle.request.environ.get('beaker.session')
+    result = db.execute("""SELECT vprasanja.id, vprasanja.text FROM vprasanja
+    INNER JOIN ankete
+    ON vprasanja.anketa = ankete.id
+    INNER JOIN uporabniki
+    ON ankete.uporabnik = uporabniki.username
+    WHERE ankete.uporabnik = ?  AND vprasanja.anketa = ? """, (s['username'], uid) )
+
+    
+    return {"loggedin":True, "data": result.fetchall()}
 
 @route('/anketa/<uid:int>', template='anketa')
 #  @view('anketa')
