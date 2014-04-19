@@ -1,11 +1,12 @@
 %rebase("okvir.tpl", loggedin=loggedin)
 
 %for i in data:
-  <div class="vprasanje">
-    <form>      
-      %i=list(i)
+  %i=list(i)
+  <div class="vprasanje" id="vprasanje{{i[0]}}" data-tip="{{i[2]}}">
+    <form>  
+      <span id="vprasanje{{i[0]}}_text">{{!i[1]}} </span>
       %if i[2] == "text":
-        {{!i[1]}} <input type="text" />
+        <input type="text" />
       %end
     </form>
     <div class="vprasanje_moznosti">
@@ -16,12 +17,16 @@
 %end
 <div id="urejanje_ozadje" style="display:none;">
   <div id="urejanje">
-    Vprasanje {{i[0]}}
+    Vprasanje <span id="id_vprasanje"></span>
     <div>
       Tip:
       <select>
-        <option>test</option>
+        %for i in tipi:
+          <option>{{i}}</option>
+        %end
       </select>
+    </div>
+    <div id="urejanje_placeholder">
     </div>
     <div>
       <button onclick="">Shrani</button>
