@@ -4,17 +4,17 @@ body{
   background-color:#F2FFF0;
 }
 h1 {
-    color: #ff8800;
-    text-decoration: underline;
+  color: #ff8800;
+  text-decoration: underline;
 }
 
 p {
-    font-family: "Arial", "Comic Sans MS", sans-serif;
+  font-family: "Arial", "Comic Sans MS", sans-serif;
 }
 
 a {
-    color: #888;
-    text-decoration: underline;
+  color: #888;
+  text-decoration: underline;
 }
 .header {
   width:100%;
@@ -63,4 +63,28 @@ table.seznam_anket,
 table.seznam_anket td,
 table.seznam_anket th{
   border:1px solid black;
+}
+.vprasanje{
+  border:1px solid black;
+  min-height:150px;
+  margin-bottom:5px;
+}
+.vprasanje_moznosti{
+  border:1px solid black;
+  height:25px;
+}
+#urejanje{
+  top:10%;
+  left:10%;
+  width:80%;
+  min-height:80%;
+  position:fixed;
+  background-color:white;
+}
+#urejanje_ozadje{
+  top:0;
+  width:100%;
+  height:100%;
+  position:fixed;
+  background-color:rgba(194,194,194,0.8);
 }
