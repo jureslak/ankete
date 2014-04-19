@@ -2,6 +2,8 @@ import bottle
 from bottle import view, route, run, Bottle, install, static_file, post, request,redirect
 from bottle_sqlite import SQLitePlugin
 from beaker.middleware import SessionMiddleware
+from os import getcwd
+from os.path import join
 
 plugin = SQLitePlugin(dbfile='baza.db', keyword='db')
 install(plugin)
@@ -15,9 +17,10 @@ session_opts = {
 
 app = SessionMiddleware(bottle.app(), session_opts)
 
-@route('/skin/css/style.css')
+@route('<:re:.*>/skin/css/style.css')
 def style():
-    return static_file('style.css', root="skin/css/")
+    return static_file('style.css', root=join(getcwd(),"skin/css"))
+
 
 @route("/login")
 @view("login")
