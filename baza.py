@@ -44,7 +44,7 @@ cur.execute("INSERT INTO uporabniki VALUES ('jureslak','jureslak', 'mail')")
 
 cur.execute("INSERT INTO ankete VALUES (NULL, 'Moja anketa', 'bla bla', 'jureslak')")
 
-cur.execute("INSERT INTO vprasanja VALUES (NULL, 'Starost?', '', 'text', 1, 1)")
+cur.execute("INSERT INTO vprasanja VALUES (NULL, 'Starost?', '10\n20', 'radiobutton', 1, 1)")
 cur.execute("INSERT INTO vprasanja VALUES (NULL, 'Visina?', '', 'text', 2, 1)")
 cur.execute("INSERT INTO vprasanja VALUES (NULL, 'Teza?', '', 'text', 3, 1)")
 
