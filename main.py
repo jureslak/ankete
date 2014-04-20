@@ -58,7 +58,7 @@ def login(db):
         s.save()
         redirect('/')
 
-@route("/logout")
+@route("<:re:.*>/logout")
 def logout():
     request.environ["beaker.session"].delete()
     redirect("/login")
