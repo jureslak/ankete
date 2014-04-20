@@ -15,11 +15,21 @@ session_opts = {
     'session.auto': True
 }
 
+tipi_vprasanj = [
+    "text",
+    "radiobutton",
+    "checkbox"
+]
+
 app = SessionMiddleware(bottle.app(), session_opts)
 
 @route('<:re:.*>/skin/css/style.css')
 def style():
     return static_file('style.css', root=join(getcwd(),"skin/css"))
+
+@route('<:re:.*>/skin/js/script.js')
+def js():
+    return static_file('script.js', root=join(getcwd(),"skin/js"))
 
 
 @route("/login")
@@ -79,7 +89,9 @@ def izbrana_anketa(uid, db):
         return {"loggedin":False}
     
     s = bottle.request.environ.get('beaker.session')
-    result = db.execute("""SELECT vprasanja.id, vprasanja.text FROM vprasanja
+    result = db.execute("""SELECT
+    vprasanja.id, vprasanja.text, vprasanja.tip
+    FROM vprasanja
     INNER JOIN ankete
     ON vprasanja.anketa = ankete.id
     INNER JOIN uporabniki
@@ -87,12 +99,12 @@ def izbrana_anketa(uid, db):
     WHERE ankete.uporabnik = ?  AND vprasanja.anketa = ? """, (s['username'], uid) )
 
     
-    return {"loggedin":True, "data": result.fetchall()}
+    return {"loggedin":True, "data": result.fetchall(), "tipi":tipi_vprasanj}
 
 @route('/anketa/<uid:int>', template='anketa')
 #  @view('anketa')
 def show_anketa(uid, db):
-    result = list(db.execute("SELECT text FROM vprasanja WHERE anketa=?",str(uid)))
+    result = list(db.execute("SELECT text, tip FROM vprasanja WHERE anketa=?",str(uid)))
     if result == []:
         abort(404)
     return {'vprasanja': map(list, result)}
