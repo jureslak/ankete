@@ -67,10 +67,15 @@ table.seznam_anket th{
 .vprasanje{
   border:1px solid black;
   min-height:150px;
-  margin-bottom:5px;
+  margin-top:15px;
+  width:80%;
+  margin-left:10%;
 }
 .vprasanje_moznosti{
   border:1px solid black;
+  border-bottom:0;
+  border-left:0;
+  border-right:0;
   height:25px;
 }
 #urejanje{
