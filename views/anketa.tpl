@@ -14,7 +14,7 @@
           %for j in i["vprasanja"].split('\n'):
             <input name="vpr{{i['id']}}" type="radio" 
             %if selected_first: 
-              checked
+              checked='checked'
               %selected_first=False
             %end
             />{{!j}}<br/>

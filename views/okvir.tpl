@@ -3,8 +3,8 @@
   <head>
     <title>To je stran</title>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
-    <script src="skin/js/script.js"></script>
-    <link rel="stylesheet" href="skin/css/style.css" type="text/css">
+    <script src="/skin/js/script.js"></script>
+    <link rel="stylesheet" href="/skin/css/style.css" type="text/css">
   </head>
   <body>
     <div class="header">

@@ -21,18 +21,19 @@ tipi_vprasanj = [
     "checkbox"
 ]
 
+root = getcwd()
 app = SessionMiddleware(bottle.app(), session_opts)
 
-@route('<:re:.*>/skin/css/style.css')
+@route('/skin/css/style.css')
 def style():
-    return static_file('style.css', root=join(getcwd(),"skin/css"))
+    return static_file('skin/css/style.css', root=root)
 
-@route('<:re:.*>/skin/js/script.js')
+@route('/skin/js/script.js')
 def js():
-    return static_file('script.js', root=join(getcwd(),"skin/js"))
+    return static_file('skin/js/script.js', root=root)
 
 
-@route("/login")
+@route("/login/")
 @view("login")
 def login():
     s = bottle.request.environ.get('beaker.session')
@@ -42,7 +43,7 @@ def login():
     return {"loggedin":False}   
 
 
-@post("/do_login")
+@post("/do_login/")
 def login(db):
     username = request.forms.get('username')
     password = request.forms.get('password')
@@ -50,7 +51,7 @@ def login(db):
     data = result.fetchall()
     
     if len(data) == 0:
-        redirect('/login')
+        redirect('/login/')
     else:
         s = bottle.request.environ.get('beaker.session')
         s['login'] = True
@@ -58,19 +59,19 @@ def login(db):
         s.save()
         redirect('/')
 
-@route("<:re:.*>/logout")
+@route("/logout/")
 def logout():
     request.environ["beaker.session"].delete()
-    redirect("/login")
+    redirect("/login/")
     return
 
 #zaradi neznanih razlogov funkcija ne sprejme db parametra, ce uporabimo view,
 #vendar pa dela pa s templatom
-@route('/moje_ankete', template="moje_ankete")
+@route('/moje_ankete/', template="moje_ankete")
 #@view('moje_ankete')
 def moje_ankete(db):
     if bottle.request.environ.get('beaker.session').get("login") == None:
-        redirect("/login")
+        redirect("/login/")
         return {"loggedin":False}
 
     s = bottle.request.environ.get('beaker.session')
@@ -84,8 +85,8 @@ def moje_ankete(db):
 
 @route("/moje_ankete/<uid:int>", template="anketa")
 def izbrana_anketa(uid, db):
-    if bottle.request.environ.get('beaker.session').get("login") == None:
-        redirect("/login")
+    if bottle.request.environ.get('beaker.session').get("login", False) == False:
+        redirect("/login/")
         return {"loggedin":False}
     
     s = bottle.request.environ.get('beaker.session')
