@@ -1,19 +1,95 @@
+body{
+  margin:0;
+  padding:0;
+  background-color:#F2FFF0;
+}
 h1 {
-    color: #ff8800;
-    text-decoration: underline;
+  color: #ff8800;
+  text-decoration: underline;
 }
 
 p {
-    font-family: "Arial", "Comic Sans MS", sans-serif;
+  font-family: "Arial", "Comic Sans MS", sans-serif;
 }
 
 a {
-    color: #888;
-    text-decoration: underline;
+  color: #888;
+  text-decoration: underline;
+}
+.header {
+  width:100%;
+  height:100px;
+  background-color: #C0DCED;
+  margin:0;
+}
+.content {
+  width:100%;
+  margin:0;
+}
+.menu_placeholder{
+  width:100%;
+  background-color:#F9FFB8;
+  height:28px;
+}
+.menu{
+  margin:0;
+  padding:0;
+  list-style-type:none;
+}
+.menu > li{
+  float:left;
+  margin-right:5px;
+}
+.menu a:link, .menu a:visited{
+  display:block;
+  width:120px;
+  font-weight:bold;
+  color:#FFFFFF;
+  background-color:#98bf21;
+  text-align:center;
+  padding:4px;
+  text-decoration:none;
+  text-transform:uppercase;
+}
+.menu a:hover,.menu a:active
+{
+  background-color:#7A991A;
 }
 
-a:hover {
-    color: #444;
-    font-size: 16pt;
-    text-decoration: underline; 
+table.seznam_anket{
+  border-collapse:collapse;
+}
+table.seznam_anket,
+table.seznam_anket td,
+table.seznam_anket th{
+  border:1px solid black;
+}
+.vprasanje{
+  border:1px solid black;
+  min-height:150px;
+  margin-top:15px;
+  width:80%;
+  margin-left:10%;
+}
+.vprasanje_moznosti{
+  border:1px solid black;
+  border-bottom:0;
+  border-left:0;
+  border-right:0;
+  height:25px;
+}
+#urejanje{
+  top:10%;
+  left:10%;
+  width:80%;
+  min-height:80%;
+  position:fixed;
+  background-color:white;
+}
+#urejanje_ozadje{
+  top:0;
+  width:100%;
+  height:100%;
+  position:fixed;
+  background-color:rgba(194,194,194,0.8);
 }

@@ -26,7 +26,10 @@ cur.execute("""CREATE TABLE ankete (
 
 cur.execute("""CREATE TABLE vprasanja (
                     id INTEGER PRIMARY KEY,
-                    text TEXT,
+                    naslov TEXT,
+                    vprasanja TEXT,
+                    tip TEXT,
+                    vrstni_red INTEGER,
                     anketa INTEGER,
                     FOREIGN KEY(anketa) REFERENCES ankete(id));""")
 
@@ -41,9 +44,9 @@ cur.execute("INSERT INTO uporabniki VALUES ('jureslak','jureslak', 'mail')")
 
 cur.execute("INSERT INTO ankete VALUES (NULL, 'Moja anketa', 'bla bla', 'jureslak')")
 
-cur.execute("INSERT INTO vprasanja VALUES (NULL, 'Starost?', 1)")
-cur.execute("INSERT INTO vprasanja VALUES (NULL, 'Visina?', 1)")
-cur.execute("INSERT INTO vprasanja VALUES (NULL, 'Teza?', 1)")
+cur.execute("INSERT INTO vprasanja VALUES (NULL, 'Starost?', '10\n20', 'radiobutton', 1, 1)")
+cur.execute("INSERT INTO vprasanja VALUES (NULL, 'Visina?', '', 'text', 2, 1)")
+cur.execute("INSERT INTO vprasanja VALUES (NULL, 'Teza?', '', 'text', 3, 1)")
 
 cur.execute("INSERT INTO odgovori VALUES (NULL, 0, '20', 0)")
 cur.execute("INSERT INTO odgovori VALUES (NULL, 0, '180', 1)")
