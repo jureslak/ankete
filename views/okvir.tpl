@@ -10,7 +10,7 @@
     <div class="header">
       <div style="float:right;margin-top:70px;margin-right:20px;">
         %if loggedin:
-          <a href="logout">Odjava</a>
+          <a href="/logout/">Odjava</a>
         %end
       </div>
     </div>
