@@ -83,7 +83,7 @@ def moje_ankete(db):
 
     return {"loggedin":True, "data":result.fetchall()}
 
-@route("/moje_ankete/<uid:int>", template="anketa")
+@route("/moje_ankete/<uid:int>/", template="anketa")
 def izbrana_anketa(uid, db):
     if bottle.request.environ.get('beaker.session').get("login", False) == False:
         redirect("/login/")
@@ -128,7 +128,7 @@ def count():
 @view('index')
 def index():
     if bottle.request.environ.get('beaker.session').get("login") == None:
-        redirect("/login")
+        redirect("/login/")
         return {"loggedin":False}
     return {"loggedin":True}
 run(app=app)
