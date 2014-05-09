@@ -4,6 +4,7 @@ $(document).ready( function(){
       zapri();
     }
   });
+  
   $("#tip").change( function(){
     if ($("#tip").val() == "text"){
       if ($("#seznam").css("display")!="none") $("#seznam").hide(200);//.css("display","none");
@@ -11,6 +12,11 @@ $(document).ready( function(){
     else if ($("#tip").val() == "radiobutton"){
       if ($("#seznam").css("display")=="none") callbackPrikazSeznam();
     }
+  });
+  
+  $("#shrani").click( function(e){
+      $("#form_shrani").attr("action","/anketa_shrani/"+$("#id_vprasanje").text().replace("Vprasanje ",'')+"/");
+      $("#form_shrani").submit();
   });
 });
 
