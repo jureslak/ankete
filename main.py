@@ -3,7 +3,14 @@ from bottle import view, route, run, Bottle, install, static_file, post, request
 from bottle_sqlite import SQLitePlugin
 from beaker.middleware import SessionMiddleware
 from os import getcwd
+import os.path
 from os.path import join
+
+
+#za lazji setup
+if not os.path.isfile("baza.db"):
+  import baza
+
 
 plugin = SQLitePlugin(dbfile='baza.db', keyword='db')
 install(plugin)
@@ -110,6 +117,14 @@ def show_anketa(uid, db):
         abort(404)
     return {'vprasanja': map(list, result)}
 
+@post("/anketa_shrani/<uid:int>/")
+def save_anketa(uid, db):
+    data = request.forms.get("seznam_vprasanj")
+    print (data)
+    db.execute("UPDATE vprasanja SET vprasanja=? WHERE id=?",(data,uid))
+    db.commit()
+    redirect("/moje_ankete/1/")
+    
 @route("/count")
 def count():
     s = bottle.request.environ.get('beaker.session')
